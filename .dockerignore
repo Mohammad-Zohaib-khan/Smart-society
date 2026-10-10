@@ -1,0 +1,17 @@
+# Keep host artefacts and secrets out of the build context. Dependencies are installed inside the
+# image with `npm ci`; host node_modules (often built for another OS) must never be copied in.
+**/node_modules
+**/dist
+**/dist-preview
+**/coverage
+**/uploads
+**/.env
+**/.env.*
+!**/.env.example
+**/*.log
+**/test-results
+.git
+.vscode
+.idea
+docs/screenshots
+e2e/screenshots

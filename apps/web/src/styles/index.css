@@ -1,0 +1,207 @@
+@import 'tailwindcss';
+
+/* Class-based dark mode so the user's choice can override the OS preference. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Botanical / organic-serif tokens. Light values follow the brief exactly; the dark theme is a
+ * separately tuned "night garden" palette, not an inversion. Text colours were chosen for
+ * WCAG AA contrast: sage and terracotta are used as fills and accents, with darker "ink"
+ * variants whenever they carry text.
+ */
+:root {
+  --background: #f9f8f4; /* warm alabaster */
+  --foreground: #2d3a31; /* deep forest */
+  --muted: #5c6a5f; /* forest at reduced weight, 5.6:1 on alabaster */
+  --surface: #ffffff;
+  --surface-2: #f2f0eb; /* secondary surface */
+  --clay: #dccfc2; /* soft clay / mushroom */
+  --border: #e6e2da; /* stone */
+  --border-strong: #d4cec2;
+  --sage: #8c9a84;
+  --sage-soft: #e5eadf;
+  --sage-ink: #4d5c47; /* sage that can carry text */
+  --terracotta: #c27b66;
+  --terracotta-soft: #f5e4dd;
+  --terracotta-ink: #9a4f3a; /* 5.3:1 on alabaster */
+  --primary: #2d3a31; /* primary buttons are forest */
+  --primary-foreground: #f9f8f4;
+  --ring: #c27b66;
+  --danger: #a3402d;
+  --danger-soft: #f6e1db;
+  --warning-soft: #f4ead2;
+  --warning-ink: #7a5a12;
+  --shadow-soft: 0 1px 2px rgb(45 58 49 / 0.04), 0 12px 32px -12px rgb(45 58 49 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(45 58 49 / 0.05), 0 24px 48px -20px rgb(45 58 49 / 0.22);
+  --grain-opacity: 0.015;
+  color-scheme: light;
+}
+
+.dark {
+  --background: #141a16;
+  --foreground: #ece8df;
+  --muted: #a9b1a5;
+  --surface: #1b221d;
+  --surface-2: #222a24;
+  --clay: #3a352f;
+  --border: #2f3932;
+  --border-strong: #3d4840;
+  --sage: #9dae94;
+  --sage-soft: #26302a;
+  --sage-ink: #b9c8b0;
+  --terracotta: #d99079;
+  --terracotta-soft: #3a2721;
+  --terracotta-ink: #eaa892;
+  --primary: #d6dfcf;
+  --primary-foreground: #18201b;
+  --ring: #d99079;
+  --danger: #f08f7b;
+  --danger-soft: #3b211c;
+  --warning-soft: #352d1a;
+  --warning-ink: #e7c878;
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 12px 32px -12px rgb(0 0 0 / 0.5);
+  --shadow-lift: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px -20px rgb(0 0 0 / 0.6);
+  --grain-opacity: 0.025;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-clay: var(--clay);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-sage-ink: var(--sage-ink);
+  --color-terracotta: var(--terracotta);
+  --color-terracotta-soft: var(--terracotta-soft);
+  --color-terracotta-ink: var(--terracotta-ink);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-ring: var(--ring);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-ink: var(--warning-ink);
+  --shadow-soft: var(--shadow-soft);
+  --shadow-lift: var(--shadow-lift);
+}
+
+@theme {
+  --font-serif: 'Playfair Display Variable', 'Playfair Display', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'Source Sans 3 Variable', 'Source Sans 3', 'Source Sans Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ease-garden: cubic-bezier(0.22, 1, 0.36, 1);
+  --radius-4xl: 2rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 1rem;
+    line-height: 1.55;
+    font-feature-settings: 'kern', 'liga', 'onum' 0;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--terracotta-soft);
+    color: var(--foreground);
+  }
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  /* Tabular figures wherever numbers line up. */
+  .tabular {
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+}
+
+/* Fixed paper grain: above the base background, below content, never interactive. */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.17 0 0 0 0 0.22 0 0 0 0 0.19 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Static atmospheric gradient derived from the ShaderGradient palette (fallback + internal pages). */
+.atmosphere-static {
+  background:
+    radial-gradient(120% 80% at 15% 10%, rgb(235 237 255 / 0.9), transparent 60%),
+    radial-gradient(90% 70% at 85% 20%, rgb(219 248 255 / 0.75), transparent 65%),
+    radial-gradient(100% 90% at 50% 100%, rgb(243 242 248 / 0.9), transparent 70%),
+    var(--background);
+}
+.dark .atmosphere-static {
+  background:
+    radial-gradient(120% 80% at 15% 10%, rgb(52 58 92 / 0.35), transparent 60%),
+    radial-gradient(90% 70% at 85% 20%, rgb(40 78 88 / 0.3), transparent 65%),
+    var(--background);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skeleton shimmer kept subtle and disabled for reduced motion above. */
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--border) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}

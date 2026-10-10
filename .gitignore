@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+uploads/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+apps/web/test-results/
+e2e/screenshots/
+dist-preview/

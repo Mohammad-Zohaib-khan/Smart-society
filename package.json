@@ -1,0 +1,40 @@
+{
+  "name": "smart-society",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Smart Society \u2014 role-based residential community operations platform",
+  "workspaces": [
+    "packages/shared",
+    "apps/api",
+    "apps/web"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace apps/api & npm run dev --workspace apps/web & wait",
+    "dev:api": "npm run dev --workspace apps/api",
+    "dev:web": "npm run dev --workspace apps/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspace apps/api && npm run build --workspace apps/web",
+    "seed": "npm run seed --workspace apps/api",
+    "verify": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "test:api:double": "TEST_DB=wire-double npm run test --workspace apps/api",
+    "e2e": "node e2e/journeys.mjs",
+    "purge-visitors": "npm run purge-visitors --workspace apps/api",
+    "start": "npm run start --workspace apps/api",
+    "create-platform-admin": "npm run create-platform-admin --workspace apps/api --"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.13.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^4.1.11"
+  }
+}

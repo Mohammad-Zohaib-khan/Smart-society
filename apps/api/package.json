@@ -1,0 +1,46 @@
+{
+  "name": "@smart-society/api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false src/server.ts",
+    "build": "tsup",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "seed": "tsx src/scripts/seed.ts",
+    "purge-visitors": "tsx src/scripts/purge-visitors.ts",
+    "create-platform-admin": "tsx src/scripts/create-platform-admin.ts"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/luxon": "^3.7.6",
+    "@types/multer": "^2.3.0",
+    "@types/node": "^22.20.5",
+    "@types/nodemailer": "^8.0.2",
+    "@types/supertest": "^7.2.1",
+    "bson": "^7.3.3",
+    "mingo": "^7.2.4",
+    "mongodb-memory-server": "^11.3.0",
+    "supertest": "^7.3.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.15"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.1",
+    "file-type": "^21.3.4",
+    "helmet": "^8.3.0",
+    "luxon": "^3.7.2",
+    "mongoose": "^8.24.5",
+    "multer": "^2.4.0",
+    "nodemailer": "^10.0.16",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
+    "zod": "^4.6.5"
+  }
+}
